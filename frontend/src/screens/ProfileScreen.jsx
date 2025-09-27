@@ -6,6 +6,7 @@ import { useProfileMutation } from "../redux/slices/usersApiSlice"
 import { useGetMyOrdersQuery } from '../redux/slices/orderApiSlice';
 import { setCredentials } from '../redux/slices/authSlice';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Loader from '../components/Loader';
 import Message from '../components/Message';
@@ -14,6 +15,7 @@ import Tabs from '../components/Tabs';
 
 
 const ProfileScreen = () => {
+  const navigate = useNavigate()
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -49,6 +51,7 @@ const ProfileScreen = () => {
         }).unwrap();
         dispatch(setCredentials({ ...res }));
         toast.success('Profile updated successfully');
+        navigate('/')
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
